@@ -101,9 +101,10 @@
 		828186F1269F835B00A9775A /* FireChat */ = {
 			isa = PBXGroup;
 			children = (
-				828186F2269F835B00A9775A /* AppDelegate.swift */,
-				828186F4269F835B00A9775A /* SceneDelegate.swift */,
-				828186F6269F835B00A9775A /* ContentView.swift */,
+				8281872B269F838A00A9775A /* Views */,
+				8281872A269F838400A9775A /* Models */,
+				82818729269F837800A9775A /* ViewModels */,
+				82818728269F837300A9775A /* Resources */,
 				828186FB269F835D00A9775A /* Assets.xcassets */,
 				82818700269F835D00A9775A /* LaunchScreen.storyboard */,
 				82818703269F835D00A9775A /* Info.plist */,
@@ -137,6 +138,37 @@
 				82818719269F835D00A9775A /* Info.plist */,
 			);
 			path = FireChatUITests;
+			sourceTree = "<group>";
+		};
+		82818728269F837300A9775A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				828186F2269F835B00A9775A /* AppDelegate.swift */,
+				828186F4269F835B00A9775A /* SceneDelegate.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		82818729269F837800A9775A /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		8281872A269F838400A9775A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8281872B269F838A00A9775A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				828186F6269F835B00A9775A /* ContentView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
