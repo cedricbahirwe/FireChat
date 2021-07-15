@@ -8,9 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    @AppStorage("isLoggedIn") var isLoggedIn = false
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            
+            ConversationsView()
+                .blur(radius: isLoggedIn ? 0 : 1)
+                .fullScreenCover(isPresented: .constant(!isLoggedIn)) {
+                    LoginView()
+                }
+        }
     }
 }
 

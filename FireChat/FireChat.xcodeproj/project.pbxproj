@@ -16,6 +16,12 @@
 		82818702269F835D00A9775A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82818700269F835D00A9775A /* LaunchScreen.storyboard */; };
 		8281870D269F835D00A9775A /* FireChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8281870C269F835D00A9775A /* FireChatTests.swift */; };
 		82818718269F835D00A9775A /* FireChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82818717269F835D00A9775A /* FireChatUITests.swift */; };
+		8290BC8826A0ADF7008F2719 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8290BC8726A0ADF7008F2719 /* LoginView.swift */; };
+		8290BC9026A0AE1A008F2719 /* ConversationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8290BC8F26A0AE1A008F2719 /* ConversationsView.swift */; };
+		8290BC9526A0AFB2008F2719 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8290BC9426A0AFB2008F2719 /* RegisterView.swift */; };
+		82D29AC526A0B9F800FA4615 /* LoginUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D29AC426A0B9F800FA4615 /* LoginUser.swift */; };
+		82D29ACA26A0B9FF00FA4615 /* RegisterUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D29AC926A0B9FF00FA4615 /* RegisterUser.swift */; };
+		82D29AD326A0BD1100FA4615 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82D29AD226A0BD1100FA4615 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +57,12 @@
 		82818713269F835D00A9775A /* FireChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FireChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82818717269F835D00A9775A /* FireChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireChatUITests.swift; sourceTree = "<group>"; };
 		82818719269F835D00A9775A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8290BC8726A0ADF7008F2719 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		8290BC8F26A0AE1A008F2719 /* ConversationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsView.swift; sourceTree = "<group>"; };
+		8290BC9426A0AFB2008F2719 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		82D29AC426A0B9F800FA4615 /* LoginUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUser.swift; sourceTree = "<group>"; };
+		82D29AC926A0B9FF00FA4615 /* RegisterUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUser.swift; sourceTree = "<group>"; };
+		82D29AD226A0BD1100FA4615 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				828186F2269F835B00A9775A /* AppDelegate.swift */,
+				82D29AD126A0BD0400FA4615 /* Extensions */,
 				828186F4269F835B00A9775A /* SceneDelegate.swift */,
 			);
 			path = Resources;
@@ -159,6 +172,8 @@
 		8281872A269F838400A9775A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				82D29AC426A0B9F800FA4615 /* LoginUser.swift */,
+				82D29AC926A0B9FF00FA4615 /* RegisterUser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -167,8 +182,27 @@
 			isa = PBXGroup;
 			children = (
 				828186F6269F835B00A9775A /* ContentView.swift */,
+				8290BC8F26A0AE1A008F2719 /* ConversationsView.swift */,
+				8290BC8626A0ADEE008F2719 /* Authentication */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		8290BC8626A0ADEE008F2719 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				8290BC8726A0ADF7008F2719 /* LoginView.swift */,
+				8290BC9426A0AFB2008F2719 /* RegisterView.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		82D29AD126A0BD0400FA4615 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				82D29AD226A0BD1100FA4615 /* Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,9 +336,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				828186F3269F835B00A9775A /* AppDelegate.swift in Sources */,
+				82D29ACA26A0B9FF00FA4615 /* RegisterUser.swift in Sources */,
 				828186F5269F835B00A9775A /* SceneDelegate.swift in Sources */,
+				82D29AC526A0B9F800FA4615 /* LoginUser.swift in Sources */,
 				828186F7269F835B00A9775A /* ContentView.swift in Sources */,
+				82D29AD326A0BD1100FA4615 /* Extensions.swift in Sources */,
+				8290BC9526A0AFB2008F2719 /* RegisterView.swift in Sources */,
+				8290BC8826A0ADF7008F2719 /* LoginView.swift in Sources */,
 				828186FA269F835B00A9775A /* FireChat.xcdatamodeld in Sources */,
+				8290BC9026A0AE1A008F2719 /* ConversationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
