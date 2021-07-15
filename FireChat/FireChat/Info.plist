@@ -56,5 +56,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>FireChat needs your permission to take picture</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>FireChat needs your permission to select a photo from your gallery</string>
 </dict>
 </plist>
