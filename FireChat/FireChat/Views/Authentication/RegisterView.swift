@@ -13,7 +13,7 @@ struct RegisterView: View {
     @State private var showImagePicker = false
     @State private var showPhotoActionSheet = false
     @State var pickerSourceType: UIImagePickerController.SourceType = .photoLibrary
-
+    
     @State private var inputImage = UIImage.init()
     
     var body: some View {
@@ -32,23 +32,21 @@ struct RegisterView: View {
                             .scaledToFill()
                     }
                 }
-                .frame(width: 85, height: 85)
+                .frame(width: 100, height: 100)
                 .background(Color.main)
-                .cornerRadius(40)
-                    
-                    
-                    .onTapGesture(perform: didTapChangeProfilePic)
-                    .actionSheet(isPresented: $showPhotoActionSheet) {
-                        ActionSheet(
-                            title: Text("Profile Picture"),
-                            message: Text("would you like to select a picture?"),
-                            buttons: [
-                                .default(Text("Take a photo"), action: takeFromCamera),
-                                .default(Text("Choose from gallery"), action: pickFromGallery
-                                ),
-                                .destructive(Text("Cancel"))
-                            ])
-                    }
+                .cornerRadius(50)
+                .onTapGesture(perform: didTapChangeProfilePic)
+                .actionSheet(isPresented: $showPhotoActionSheet) {
+                    ActionSheet(
+                        title: Text("Profile Picture"),
+                        message: Text("would you like to select a picture?"),
+                        buttons: [
+                            .default(Text("Take a photo"), action: takeFromCamera),
+                            .default(Text("Choose from gallery"), action: pickFromGallery
+                            ),
+                            .destructive(Text("Cancel"))
+                        ])
+                }
                 Text("FireChat")
                     .font(.title3)
                     .bold()
@@ -110,7 +108,7 @@ struct RegisterView: View {
                 Alert(title: Text("Woops!!!"),
                       message: Text("Please enter all to create a new account"),
                       dismissButton: .destructive(Text("Dismiss")))
-
+                
             }
             Spacer()
         }
@@ -123,7 +121,7 @@ struct RegisterView: View {
     
     // Validations
     private func didPressRegister() {
-       showRegisterErrorAlert = !user.isvalid
+        showRegisterErrorAlert = !user.isvalid
         hideKeyboard()
     }
     
