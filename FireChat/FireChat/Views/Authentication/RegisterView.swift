@@ -10,19 +10,45 @@ import SwiftUI
 struct RegisterView: View {
     @State private var user = RegisterModel()
     @State private var showRegisterErrorAlert = false
+    @State private var showImagePicker = false
+    @State private var showPhotoActionSheet = false
+    @State var pickerSourceType: UIImagePickerController.SourceType = .photoLibrary
+
+    @State private var inputImage = UIImage.init()
+    
     var body: some View {
         VStack(spacing: 15) {
             VStack(spacing: 1) {
-                Image(systemName: "person")
-                    .resizable()
-                    .renderingMode(.template)
-                    .scaledToFit()
-                    .foregroundColor(.white)
-                    .frame(width: 60, height: 60)
-                    .padding(25)
-                    .background(Color.main.blur(radius: 10))
-                    .cornerRadius(30)
+                
+                ZStack {
+                    if inputImage == UIImage.init() {
+                        Image(systemName: "person")
+                            .resizable()
+                            .scaledToFit()
+                            .padding(20)
+                    } else {
+                        Image(uiImage: inputImage)
+                            .resizable()
+                            .scaledToFill()
+                    }
+                }
+                .frame(width: 85, height: 85)
+                .background(Color.main)
+                .cornerRadius(40)
+                    
+                    
                     .onTapGesture(perform: didTapChangeProfilePic)
+                    .actionSheet(isPresented: $showPhotoActionSheet) {
+                        ActionSheet(
+                            title: Text("Profile Picture"),
+                            message: Text("would you like to select a picture?"),
+                            buttons: [
+                                .default(Text("Take a photo"), action: takeFromCamera),
+                                .default(Text("Choose from gallery"), action: pickFromGallery
+                                ),
+                                .destructive(Text("Cancel"))
+                            ])
+                    }
                 Text("FireChat")
                     .font(.title3)
                     .bold()
@@ -80,15 +106,18 @@ struct RegisterView: View {
                     .cornerRadius(8)
             }
             
-            .alert(isPresented: $showRegisterErrorAlert)  {
+            .alert(isPresented: $showRegisterErrorAlert) {
                 Alert(title: Text("Woops!!!"),
                       message: Text("Please enter all to create a new account"),
                       dismissButton: .destructive(Text("Dismiss")))
-                
+
             }
             Spacer()
         }
         .padding()
+        .fullScreenCover(isPresented: $showImagePicker) {
+            ImagePicker(image: $inputImage, sourceType: $pickerSourceType)
+        }
         .navigationTitle("Create Account")
     }
     
@@ -99,7 +128,19 @@ struct RegisterView: View {
     }
     
     private func didTapChangeProfilePic() {
-        
+        print("sho")
+        showPhotoActionSheet.toggle()
+    }
+    
+    
+    func takeFromCamera() {
+        pickerSourceType = .camera
+        showImagePicker.toggle()
+    }
+    
+    func pickFromGallery() {
+        pickerSourceType = .photoLibrary
+        showImagePicker.toggle()
     }
 }
 
@@ -111,3 +152,5 @@ struct RegisterView_Previews: PreviewProvider {
         }
     }
 }
+
+
