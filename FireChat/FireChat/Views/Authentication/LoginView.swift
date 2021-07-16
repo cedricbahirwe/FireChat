@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 let size = UIScreen.main.bounds.size
 
@@ -27,9 +28,9 @@ struct LoginView: View {
                 }
                 TextField("Email...",
                           text: $user.email)
+                    .textContentType(.emailAddress)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
-                    .textContentType(.emailAddress)
                     .padding(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -37,9 +38,9 @@ struct LoginView: View {
                     )
                 SecureField("Password...",
                             text: $user.password)
+                    .textContentType(.password)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
-                    .textContentType(.password)
                     .padding(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
@@ -82,8 +83,25 @@ struct LoginView: View {
     
     // Validations
     private func didPressLogin() {
-       showLoginErrorAlert = !user.isvalid
+        showLoginErrorAlert = !user.isvalid
         hideKeyboard()
+        FirebaseAuth
+            .Auth.auth()
+            .signIn(withEmail: user.email,
+                    password: user.password) { (authResult, error) in
+                guard error == nil else {
+                    print("Failed to login in user")
+                    return
+                }
+                
+                guard let result = authResult else {
+                    return
+                }
+                
+                let user = result.user
+                print("Login User \(user)")
+                
+            }
     }
     
 }

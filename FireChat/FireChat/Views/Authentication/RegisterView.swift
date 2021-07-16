@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct RegisterView: View {
     @State private var user = RegisterModel()
@@ -123,6 +124,24 @@ struct RegisterView: View {
     private func didPressRegister() {
         showRegisterErrorAlert = !user.isvalid
         hideKeyboard()
+        
+        FirebaseAuth.Auth.auth().createUser(withEmail: user.email, password: user.password) { (authResult, error) in
+            
+            guard error == nil else {
+                print("Error creating user")
+                return
+            }
+            
+            guard let result = authResult else {
+                 return
+            }
+            
+            
+            let user = result.user
+            print("Created User \(user)")
+            
+            
+        }
     }
     
     private func didTapChangeProfilePic() {
