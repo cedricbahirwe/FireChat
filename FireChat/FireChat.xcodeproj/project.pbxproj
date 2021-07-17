@@ -17,6 +17,7 @@
 		82818702269F835D00A9775A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82818700269F835D00A9775A /* LaunchScreen.storyboard */; };
 		8281870D269F835D00A9775A /* FireChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8281870C269F835D00A9775A /* FireChatTests.swift */; };
 		82818718269F835D00A9775A /* FireChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82818717269F835D00A9775A /* FireChatUITests.swift */; };
+		828A916E26A2FF1900A37387 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828A916D26A2FF1900A37387 /* AuthenticationViewModel.swift */; };
 		8290BC8826A0ADF7008F2719 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8290BC8726A0ADF7008F2719 /* LoginView.swift */; };
 		8290BC9026A0AE1A008F2719 /* ConversationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8290BC8F26A0AE1A008F2719 /* ConversationsView.swift */; };
 		8290BC9526A0AFB2008F2719 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8290BC9426A0AFB2008F2719 /* RegisterView.swift */; };
@@ -65,6 +66,7 @@
 		82818713269F835D00A9775A /* FireChatUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FireChatUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82818717269F835D00A9775A /* FireChatUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireChatUITests.swift; sourceTree = "<group>"; };
 		82818719269F835D00A9775A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		828A916D26A2FF1900A37387 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		8290BC8726A0ADF7008F2719 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		8290BC8F26A0AE1A008F2719 /* ConversationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationsView.swift; sourceTree = "<group>"; };
 		8290BC9426A0AFB2008F2719 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 		82818729269F837800A9775A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				828A916D26A2FF1900A37387 /* AuthenticationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				828A916E26A2FF1900A37387 /* AuthenticationViewModel.swift in Sources */,
 				828186F3269F835B00A9775A /* AppDelegate.swift in Sources */,
 				82D29ACA26A0B9FF00FA4615 /* RegisterUser.swift in Sources */,
 				828186F5269F835B00A9775A /* SceneDelegate.swift in Sources */,

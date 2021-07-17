@@ -9,8 +9,8 @@ import SwiftUI
 import FirebaseAuth
 
 struct RegisterView: View {
-    @State private var user = RegisterModel()
-    @State private var showRegisterErrorAlert = false
+    @StateObject private var authVm = AuthenticationService()
+    @State private var showRegError = false
     @State private var showImagePicker = false
     @State private var showPhotoActionSheet = false
     @State var pickerSourceType: UIImagePickerController.SourceType = .photoLibrary
@@ -56,7 +56,7 @@ struct RegisterView: View {
             }
             
             TextField("First name",
-                      text: $user.firstName)
+                      text: $authVm.regUser.firstName)
                 .disableAutocorrection(true)
                 .textContentType(.givenName)
                 .padding(10)
@@ -66,7 +66,7 @@ struct RegisterView: View {
                 )
             
             TextField("Last Name",
-                      text: $user.lastName)
+                      text: $authVm.regUser.lastName)
                 .disableAutocorrection(true)
                 .textContentType(.familyName)
                 .padding(10)
@@ -75,7 +75,7 @@ struct RegisterView: View {
                         .stroke(Color.primary)
                 )
             TextField("Email",
-                      text: $user.email)
+                      text: $authVm.regUser.email)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .textContentType(.emailAddress)
@@ -84,8 +84,8 @@ struct RegisterView: View {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(Color.primary)
                 )
-            SecureField("Password...",
-                        text: $user.password)
+            SecureField("Password",
+                        text: $authVm.regUser.password)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .textContentType(.password)
@@ -104,8 +104,7 @@ struct RegisterView: View {
                     .background(Color.orange)
                     .cornerRadius(8)
             }
-            
-            .alert(isPresented: $showRegisterErrorAlert) {
+            .alert(isPresented: $showRegError) {
                 Alert(title: Text("Woops!!!"),
                       message: Text("Please enter all to create a new account"),
                       dismissButton: .destructive(Text("Dismiss")))
@@ -115,33 +114,17 @@ struct RegisterView: View {
         }
         .padding()
         .fullScreenCover(isPresented: $showImagePicker) {
-            ImagePicker(image: $inputImage, sourceType: $pickerSourceType)
+            ImagePicker(image: $inputImage,
+                        sourceType: $pickerSourceType)
         }
         .navigationTitle("Create Account")
     }
     
     // Validations
     private func didPressRegister() {
-        showRegisterErrorAlert = !user.isvalid
+        showRegError = !authVm.regUser.isvalid
         hideKeyboard()
-        
-        FirebaseAuth.Auth.auth().createUser(withEmail: user.email, password: user.password) { (authResult, error) in
-            
-            guard error == nil else {
-                print("Error creating user")
-                return
-            }
-            
-            guard let result = authResult else {
-                 return
-            }
-            
-            
-            let user = result.user
-            print("Created User \(user)")
-            
-            
-        }
+        authVm.registerUser()
     }
     
     private func didTapChangeProfilePic() {

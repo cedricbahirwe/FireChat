@@ -11,9 +11,8 @@ import FirebaseAuth
 let size = UIScreen.main.bounds.size
 
 struct LoginView: View {
-    
-    @State private var user = LoginModel()
-    @State private var showLoginErrorAlert = false
+    @StateObject private var authVm = AuthenticationService()
+    @State private var showLoginError = false
     
     var body: some View {
         NavigationView {
@@ -27,7 +26,7 @@ struct LoginView: View {
 
                 }
                 TextField("Email...",
-                          text: $user.email)
+                          text: $authVm.loginUser.email)
                     .textContentType(.emailAddress)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
@@ -37,7 +36,7 @@ struct LoginView: View {
                             .stroke(Color.primary)
                     )
                 SecureField("Password...",
-                            text: $user.password)
+                            text: $authVm.loginUser.password)
                     .textContentType(.password)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
@@ -57,7 +56,7 @@ struct LoginView: View {
                         .cornerRadius(8)
                 }
                 
-                .alert(isPresented: $showLoginErrorAlert)  {
+                .alert(isPresented: $showLoginError)  {
                     Alert(title: Text("Woops!!!"),
                           message: Text("Please enter all to log in"),
                           dismissButton: .destructive(Text("Dismiss")))
@@ -83,25 +82,11 @@ struct LoginView: View {
     
     // Validations
     private func didPressLogin() {
-        showLoginErrorAlert = !user.isvalid
+        showLoginError = !authVm.loginUser.isvalid
         hideKeyboard()
-        FirebaseAuth
-            .Auth.auth()
-            .signIn(withEmail: user.email,
-                    password: user.password) { (authResult, error) in
-                guard error == nil else {
-                    print("Failed to login in user")
-                    return
-                }
-                
-                guard let result = authResult else {
-                    return
-                }
-                
-                let user = result.user
-                print("Login User \(user)")
-                
-            }
+        
+        authVm.authenticateUser()
+        
     }
     
 }
