@@ -6,19 +6,25 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 let size = UIScreen.main.bounds.size
 
 struct LoginView: View {
-    
-    @State private var user = LoginModel()
-    @State private var showLoginErrorAlert = false
+    @ObservedObject var authVm: AuthenticationService
+    @State private var showLoginError = false
+    @State private var goToRegistration = false
     
     var body: some View {
         NavigationView {
             VStack(spacing: 15) {
                 VStack(spacing: 1) {
-                    LOGO()
+                    ZStack {
+                        NavigationLink(
+                            destination: RegisterView(authVm: authVm),
+                            isActive: $goToRegistration) { }
+                        LOGO()
+                    }
                     Text("FireChat")
                         .font(.title3)
                         .bold()
@@ -26,27 +32,27 @@ struct LoginView: View {
 
                 }
                 TextField("Email...",
-                          text: $user.email)
+                          text: $authVm.loginUser.email)
+                    .textContentType(.emailAddress)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
-                    .textContentType(.emailAddress)
                     .padding(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.primary)
                     )
                 SecureField("Password...",
-                            text: $user.password)
+                            text: $authVm.loginUser.password)
+                    .textContentType(.password)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
-                    .textContentType(.password)
                     .padding(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.primary)
                     )
                 
-                Button(action: didPressLogin) {
+                Button(action: login) {
                     Text("Log In")
                         .bold()
                         .foregroundColor(.white)
@@ -56,7 +62,7 @@ struct LoginView: View {
                         .cornerRadius(8)
                 }
                 
-                .alert(isPresented: $showLoginErrorAlert)  {
+                .alert(isPresented: $showLoginError)  {
                     Alert(title: Text("Woops!!!"),
                           message: Text("Please enter all to log in"),
                           dismissButton: .destructive(Text("Dismiss")))
@@ -68,29 +74,30 @@ struct LoginView: View {
             .navigationTitle("Login")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItemGroup(placement:.navigationBarTrailing) {
+                ToolbarItem(placement:.navigationBarTrailing) {
                     
-                    NavigationLink(
-                        destination: RegisterView(),
-                        label: {
-                            Text("Register")
-                        })
+                    
+                    Button("Register") {
+                        goToRegistration.toggle()
+                    }
                 }
             }
+            
         }
     }
     
     // Validations
-    private func didPressLogin() {
-       showLoginErrorAlert = !user.isvalid
+    private func login() {
+        showLoginError = !authVm.loginUser.isvalid
         hideKeyboard()
+        authVm.authenticateUser()
     }
     
 }
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(authVm: AuthenticationService())
     }
 }
 
