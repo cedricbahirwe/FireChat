@@ -13,11 +13,8 @@ struct ContentView: View {
         NavigationView {
             ConversationsView()
                 .blur(radius: authVm.isLoggedIn ? 0 : 1)
-                .fullScreenCover(isPresented:
-                                    Binding(get: { !authVm.isLoggedIn },
-                                            set: { authVm.isLoggedIn = $0 }
-                                    )) {
-                    LoginView()
+                .fullScreenCover(isPresented: $authVm.isLoggedIn.inverted()) {
+                    LoginView(authVm: authVm)
                 }
         }
     }
@@ -34,7 +31,7 @@ extension Binding where Value == Bool {
     func inverted() -> Binding<Bool> {
         Binding(
             get: { !wrappedValue },
-            set: { wrappedValue = $0 }
+            set: { wrappedValue = !$0 }
         )
         
     }

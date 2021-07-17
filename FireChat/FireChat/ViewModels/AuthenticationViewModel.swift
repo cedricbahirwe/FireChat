@@ -16,6 +16,8 @@ class AuthenticationService: ObservableObject {
     @Published var isLoggedIn = false
     
     init() {
+//        signOut()
+        print("Signing ")
         validateAuth()
     }
     public func authenticateUser() {
@@ -46,7 +48,7 @@ class AuthenticationService: ObservableObject {
                                             password: regUser.password) { (authResult, error) in
             
             guard error == nil else {
-                print("Error creating user")
+                print("Error creating user \(error!.localizedDescription)")
                 return
             }
             

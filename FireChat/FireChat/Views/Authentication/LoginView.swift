@@ -11,14 +11,20 @@ import FirebaseAuth
 let size = UIScreen.main.bounds.size
 
 struct LoginView: View {
-    @StateObject private var authVm = AuthenticationService()
+    @ObservedObject var authVm: AuthenticationService
     @State private var showLoginError = false
+    @State private var goToRegistration = false
     
     var body: some View {
         NavigationView {
             VStack(spacing: 15) {
                 VStack(spacing: 1) {
-                    LOGO()
+                    ZStack {
+                        NavigationLink(
+                            destination: RegisterView(authVm: authVm),
+                            isActive: $goToRegistration) { }
+                        LOGO()
+                    }
                     Text("FireChat")
                         .font(.title3)
                         .bold()
@@ -68,13 +74,14 @@ struct LoginView: View {
             .navigationTitle("Login")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItemGroup(placement:.navigationBarTrailing) {
+                ToolbarItem(placement:.navigationBarTrailing) {
                     
-                    NavigationLink(
-                        destination: RegisterView(),
-                        label: {
-                            Text("Register")
-                        })
+                    
+                    Button(action: {
+                        goToRegistration.toggle()
+                    }, label: {
+                        Text("Register")
+                    })
                 }
             }
         }
@@ -91,7 +98,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(authVm: AuthenticationService())
     }
 }
 
