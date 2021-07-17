@@ -19,13 +19,9 @@ class AuthenticationService: ObservableObject {
     @Published var regUser = RegisterModel()
         
     @Published var isLoggedIn = false
-    
     @Published var regError: FCError?
-
     
     init() {
-//        signOut()
-        print("Signing ")
         validateAuth()
     }
     public func authenticateUser() {
@@ -53,7 +49,7 @@ class AuthenticationService: ObservableObject {
     public func registerUser() {
         guard regUser.isvalid else { return }
         
-        FCDatabaseManger.shared.userExists(with: self.regUser.email) { [weak self] userExists in
+        FCDatabaseManger.shared.userExists(with: regUser.email) { [weak self] userExists in
             
             guard let strongSelf = self else { return }
             

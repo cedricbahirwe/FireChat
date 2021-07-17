@@ -18,6 +18,7 @@ struct RegisterView: View {
     @State private var inputImage = UIImage.init()
     
     var body: some View {
+        
         VStack(spacing: 15) {
             VStack(spacing: 1) {
                 

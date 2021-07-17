@@ -13,7 +13,7 @@ struct RegisterModel {
     var email: String = "@gmail.com"
     var password: String = ""
     var isvalid: Bool {
-        !email.isEmpty
+        email.isValidEmail
             && password.count > 6
             && !firstName.isEmpty
             && !lastName.isEmpty

@@ -13,4 +13,12 @@ struct FCUser {
     let lastName: String
     let email: String
 //    let profilePicUrl: String
+    
+    
+    var safeEmail: String {
+        var safeEmail = email.replacingOccurrences(of: ".", with: "-")
+        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
+        return safeEmail
+        
+    }
 }

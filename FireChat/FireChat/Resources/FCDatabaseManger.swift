@@ -15,9 +15,6 @@ final class FCDatabaseManger {
     
     private init () { }
     
-    public func test() {
-        database.child("foo").setValue(["somekey" : true])
-    }
 
 }
 
@@ -32,7 +29,11 @@ extension FCDatabaseManger {
     ///   - completion: whether the user already exist
     public func userExists(with email: String,
                                 completion: @escaping(Bool) -> Void) {
-        database.child(email).observeSingleEvent(of: .value) { snapShot in
+        
+        var safeEmail = email.replacingOccurrences(of: ".", with: "-")
+        safeEmail = safeEmail.replacingOccurrences(of: "@", with: "-")
+        
+        database.child(safeEmail).observeSingleEvent(of: .value) { snapShot in
             guard let _ = snapShot.value as? String else {
                 completion(false)
                 return
@@ -44,7 +45,8 @@ extension FCDatabaseManger {
     /// Insert a user to the database
     /// - Parameter user: the user to insert
     public func insertUser(with user: FCUser) {
-        database.child(user.email).setValue([
+        print("Stored")
+        database.child(user.safeEmail).setValue([
             "firstName" : user.firstName,
             "lastName" : user.lastName
         ])

@@ -15,7 +15,6 @@ struct ConversationsView: View {
             .navigationTitle("Conversations")
             .navigationBarHidden(true)
             .onAppear() {
-                FCDatabaseManger.shared.test()
             }
     }
 }
