@@ -36,7 +36,7 @@ struct RegisterView: View {
                 .frame(width: 100, height: 100)
                 .background(Color.main)
                 .cornerRadius(50)
-                .onTapGesture(perform: didTapChangeProfilePic)
+                .onTapGesture(perform: changeProfilePic)
                 .actionSheet(isPresented: $showPhotoActionSheet) {
                     ActionSheet(
                         title: Text("Profile Picture"),
@@ -95,7 +95,7 @@ struct RegisterView: View {
                         .stroke(Color.primary)
                 )
             
-            Button(action: didPressRegister) {
+            Button(action: registration) {
                 Text("Register")
                     .bold()
                     .foregroundColor(.white)
@@ -106,7 +106,7 @@ struct RegisterView: View {
             }
             .alert(isPresented: $showRegError) {
                 Alert(title: Text("Woops!!!"),
-                      message: Text("Please enter all to create a new account"),
+                      message: Text("Please enter all information to create a new account"),
                       dismissButton: .destructive(Text("Dismiss")))
                 
             }
@@ -121,14 +121,13 @@ struct RegisterView: View {
     }
     
     // Validations
-    private func didPressRegister() {
+    private func registration() {
         showRegError = !authVm.regUser.isvalid
         hideKeyboard()
         authVm.registerUser()
     }
     
-    private func didTapChangeProfilePic() {
-        print("sho")
+    private func changeProfilePic() {
         showPhotoActionSheet.toggle()
     }
     

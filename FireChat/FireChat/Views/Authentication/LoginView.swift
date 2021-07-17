@@ -46,7 +46,7 @@ struct LoginView: View {
                             .stroke(Color.primary)
                     )
                 
-                Button(action: didPressLogin) {
+                Button(action: login) {
                     Text("Log In")
                         .bold()
                         .foregroundColor(.white)
@@ -81,12 +81,10 @@ struct LoginView: View {
     }
     
     // Validations
-    private func didPressLogin() {
+    private func login() {
         showLoginError = !authVm.loginUser.isvalid
         hideKeyboard()
-        
         authVm.authenticateUser()
-        
     }
     
 }
