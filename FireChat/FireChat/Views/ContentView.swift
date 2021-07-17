@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @AppStorage("isLoggedIn") var isLoggedIn = false
+    @StateObject var authVm = AuthenticationService()
     var body: some View {
         NavigationView {
-            
             ConversationsView()
-                .blur(radius: isLoggedIn ? 0 : 1)
-                .fullScreenCover(isPresented: .constant(!isLoggedIn)) {
+                .blur(radius: authVm.isLoggedIn ? 0 : 1)
+                .fullScreenCover(isPresented:
+                                    Binding(get: { !authVm.isLoggedIn },
+                                            set: { authVm.isLoggedIn = $0 }
+                                    )) {
                     LoginView()
                 }
         }
@@ -24,5 +26,16 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+    }
+}
+
+
+extension Binding where Value == Bool {
+    func inverted() -> Binding<Bool> {
+        Binding(
+            get: { !wrappedValue },
+            set: { wrappedValue = $0 }
+        )
+        
     }
 }

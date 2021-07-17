@@ -7,12 +7,17 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
 
 class AuthenticationService: ObservableObject {
     @Published var loginUser = LoginModel()
     @Published var regUser = RegisterModel()
         
+    @Published var isLoggedIn = false
     
+    init() {
+        validateAuth()
+    }
     public func authenticateUser() {
         guard loginUser.isvalid else { return }
         FirebaseAuth
@@ -30,6 +35,7 @@ class AuthenticationService: ObservableObject {
                 
                 let user = result.user
                 print("Login User \(user)")
+                self.isLoggedIn = true
                 
             }
     }
@@ -51,11 +57,21 @@ class AuthenticationService: ObservableObject {
             
             let user = result.user
             print("Created User \(user)")
-            
-            
+            self.isLoggedIn = true
         }
     }
     
     
     
+    public func validateAuth() {
+        isLoggedIn = FirebaseAuth.Auth.auth().currentUser != nil
+    }
+    
+    public func signOut() {
+        do {
+            try FirebaseAuth.Auth.auth().signOut()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }

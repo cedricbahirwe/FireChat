@@ -23,10 +23,11 @@ struct RegisterView: View {
                 
                 ZStack {
                     if inputImage == UIImage.init() {
-                        Image(systemName: "person")
+                        Image(systemName: "person.circle")
                             .resizable()
                             .scaledToFit()
-                            .padding(20)
+                            .padding(10)
+                            .foregroundColor(.secondary)
                     } else {
                         Image(uiImage: inputImage)
                             .resizable()

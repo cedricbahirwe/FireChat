@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ConversationsView: View {
+    
     var body: some View {
         Color.red
+            .navigationTitle("Conversations")
     }
 }
 
