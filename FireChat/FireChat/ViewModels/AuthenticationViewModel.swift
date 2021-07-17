@@ -9,11 +9,19 @@ import Foundation
 import Firebase
 import FirebaseAuth
 
+struct FCError: Identifiable {
+    var id: String { message }
+    var message: String = ""
+}
+
 class AuthenticationService: ObservableObject {
     @Published var loginUser = LoginModel()
     @Published var regUser = RegisterModel()
         
     @Published var isLoggedIn = false
+    
+    @Published var regError: FCError?
+
     
     init() {
 //        signOut()
@@ -44,18 +52,30 @@ class AuthenticationService: ObservableObject {
     /// Register a user on `Firebase` using `email` and `password`
     public func registerUser() {
         guard regUser.isvalid else { return }
-        FirebaseAuth.Auth.auth().createUser(withEmail: regUser.email,
-                                            password: regUser.password) { (authResult, error) in
+        
+        FCDatabaseManger.shared.userExists(with: self.regUser.email) { [weak self] userExists in
             
-            guard error == nil else {
-                print("Error creating user \(error!.localizedDescription)")
+            guard let strongSelf = self else { return }
+            
+            guard !userExists else {
+                strongSelf.regError?.message = "Email address already exists"
+                print("User already exists")
                 return
             }
             
-            guard authResult  != nil else { return }
-            
-            FCDatabaseManger.shared.insertUser(with: self.regUser.toFCUser())
-            self.isLoggedIn = true
+            FirebaseAuth.Auth.auth().createUser(withEmail: strongSelf.regUser.email,
+                                                password: strongSelf.regUser.password) { (authResult, error) in
+                
+                guard error == nil else {
+                    print("Error creating user \(error!.localizedDescription)")
+                    return
+                }
+                
+                guard authResult  != nil else { return }
+                
+                FCDatabaseManger.shared.insertUser(with: strongSelf.regUser.toFCUser())
+                strongSelf.isLoggedIn = true
+            }
         }
     }
     

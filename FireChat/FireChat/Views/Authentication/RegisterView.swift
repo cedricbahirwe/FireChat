@@ -105,9 +105,10 @@ struct RegisterView: View {
                     .background(Color.orange)
                     .cornerRadius(8)
             }
-            .alert(isPresented: $showRegError) {
+            .alert(item: $authVm.regError) { error in
+//            .alert(isPresented: $showRegError) {
                 Alert(title: Text("Woops!!!"),
-                      message: Text("Please enter all information to create a new account"),
+                      message: Text(error.message),
                       dismissButton: .destructive(Text("Dismiss")))
                 
             }
