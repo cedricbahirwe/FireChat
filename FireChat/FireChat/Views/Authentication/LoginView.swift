@@ -77,13 +77,12 @@ struct LoginView: View {
                 ToolbarItem(placement:.navigationBarTrailing) {
                     
                     
-                    Button(action: {
+                    Button("Register") {
                         goToRegistration.toggle()
-                    }, label: {
-                        Text("Register")
-                    })
+                    }
                 }
             }
+            
         }
     }
     

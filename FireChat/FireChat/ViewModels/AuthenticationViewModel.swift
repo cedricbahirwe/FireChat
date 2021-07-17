@@ -52,13 +52,9 @@ class AuthenticationService: ObservableObject {
                 return
             }
             
-            guard let result = authResult else {
-                 return
-            }
+            guard authResult  != nil else { return }
             
-            
-            let user = result.user
-            print("Created User \(user)")
+            FCDatabaseManger.shared.insertUser(with: self.regUser.toFCUser())
             self.isLoggedIn = true
         }
     }
