@@ -17,6 +17,8 @@ struct LoginView: View {
     @State private var showLoginError = false
     @State private var goToRegistration = false
     
+    private let fbBgColor = Color(red: 0.097, green: 0.466, blue: 0.949)
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 15) {
@@ -73,11 +75,13 @@ struct LoginView: View {
                 }
                 
                 VStack {
-                    FBLogin()
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 45)
-                        .cornerRadius(8)
+                    FBLoginButtonView(didGetCredFromFb: authVm.manageFbCredential)
+                        .frame(maxWidth: 210)
                 }
+                .frame(maxWidth: .infinity)
+                .frame(height: 45)
+                .background(fbBgColor)
+                .cornerRadius(8)
                 
                 Spacer()
             }
@@ -128,12 +132,47 @@ struct LOGO: View {
     }
 }
 
-struct FBLogin: UIViewRepresentable {
+fileprivate struct FBLoginButtonView: UIViewRepresentable {
+    
+    var didGetCredFromFb: (AuthCredential) -> Void
     func makeUIView(context: Context) ->  UIButton {
         let loginButton = FBLoginButton()
+        loginButton.permissions = ["email", "public_profile"]
+        loginButton.delegate = context.coordinator
         return loginButton
     }
     func updateUIView(_ uiView: UIButton, context: Context) {
+        
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, LoginButtonDelegate {
+        
+        let parent: FBLoginButtonView
+        init(_ parent: FBLoginButtonView) {
+            self.parent = parent
+        }
+        func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+                
+            guard let token = result?.token?.tokenString else {
+                print("User failed to log in with facebook")
+                return
+            }
+            
+            let credential = FacebookAuthProvider.credential(withAccessToken: token)
+            
+            
+            parent.didGetCredFromFb(credential)
+            
+        }
+        
+        func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+            print("No operation for now")
+        }
+        
         
     }
 }
