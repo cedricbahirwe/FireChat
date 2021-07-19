@@ -8,23 +8,15 @@
 import SwiftUI
 
 struct ConversationsView: View {
-    @EnvironmentObject var authVm: AuthenticationService
+    
     var body: some View {
         VStack {
             Color.white
                 .ignoresSafeArea()
             
-            Text(authVm.isLoggedIn.description)
             
         }
         .navigationTitle("Conversations")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                
-                Button("Log Out", action: authVm.signOut)
-                
-            }
-        }
     }
 }
 

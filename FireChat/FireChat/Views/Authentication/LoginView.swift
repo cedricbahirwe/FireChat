@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FirebaseAuth
+import FBSDKLoginKit
+import UIKit
 
 let size = UIScreen.main.bounds.size
 
@@ -52,6 +54,8 @@ struct LoginView: View {
                             .stroke(Color.primary)
                     )
                 
+               
+                
                 Button(action: login) {
                     Text("Log In")
                         .bold()
@@ -61,13 +65,20 @@ struct LoginView: View {
                         .background(Color.orange)
                         .cornerRadius(8)
                 }
-                
                 .alert(isPresented: $showLoginError)  {
                     Alert(title: Text("Woops!!!"),
                           message: Text("Please enter all to log in"),
                           dismissButton: .destructive(Text("Dismiss")))
                     
                 }
+                
+                VStack {
+                    FBLogin()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 45)
+                        .cornerRadius(8)
+                }
+                
                 Spacer()
             }
             .padding()
@@ -114,5 +125,15 @@ struct LOGO: View {
             .background(Color("orange"))
             .cornerRadius(30)
             .padding(5)
+    }
+}
+
+struct FBLogin: UIViewRepresentable {
+    func makeUIView(context: Context) ->  UIButton {
+        let loginButton = FBLoginButton()
+        return loginButton
+    }
+    func updateUIView(_ uiView: UIButton, context: Context) {
+        
     }
 }

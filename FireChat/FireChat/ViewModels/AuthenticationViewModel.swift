@@ -81,7 +81,11 @@ class AuthenticationService: ObservableObject {
         isLoggedIn = FirebaseAuth.Auth.auth().currentUser != nil
     }
     
-    public func signOut() {
+    public func confirmSignOut() {
+        signOut()
+    }
+    
+    private func signOut() {
         do {
             try FirebaseAuth.Auth.auth().signOut()
             

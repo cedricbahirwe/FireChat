@@ -8,11 +8,32 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var authVm: AuthenticationService
+    @State private var showLogoutAlert = false
     var body: some View {
         NavigationView {
             VStack {
-                Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+                Text("Hello, World!")
             }
+            .actionSheet(isPresented: $showLogoutAlert) {
+                ActionSheet(title: Text("Log Out Confirmation"),
+                            message: Text("Do you really want to log out?"),
+                            buttons: [
+                                .destructive(Text("Log Out"), action: authVm.confirmSignOut),
+                                .cancel()
+                            ])
+                
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    
+                    Button("Log Out") {
+                        showLogoutAlert.toggle()
+                    }
+                    
+                }
+            }
+            
             .navigationTitle("Profile")
         }
     }

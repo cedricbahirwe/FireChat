@@ -6,9 +6,14 @@ target 'FireChat' do
   use_frameworks!
 
   # Pods for FireChat
+  # Firebase
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
+
+  # Facebook
+  pod 'FBSDKLoginKit' 
+ 
 
   target 'FireChatTests' do
     inherit! :search_paths
