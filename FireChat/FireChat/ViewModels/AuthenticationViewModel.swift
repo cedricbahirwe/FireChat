@@ -84,6 +84,8 @@ class AuthenticationService: ObservableObject {
     public func signOut() {
         do {
             try FirebaseAuth.Auth.auth().signOut()
+            
+            isLoggedIn = false
         } catch {
             print(error.localizedDescription)
         }
