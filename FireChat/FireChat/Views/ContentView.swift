@@ -9,14 +9,31 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var authVm = AuthenticationService()
+    @State private var selection = 0
     var body: some View {
-        NavigationView {
-            ConversationsView()
-                .blur(radius: authVm.isLoggedIn ? 0 : 1)
-                .fullScreenCover(isPresented: $authVm.isLoggedIn.inverted()) {
-                    LoginView(authVm: authVm)
+        
+        TabView(selection: $selection) {
+            NavigationView {
+                ConversationsView()
+                    .blur(radius: authVm.isLoggedIn ? 0 : 1)
+                    .fullScreenCover(isPresented: $authVm.isLoggedIn.inverted()) {
+                        LoginView(authVm: authVm)
+                    }
+            }
+            .tabItem {
+                Label("Chats", systemImage: "house")
+            }
+            .tag(0)
+            
+            ProfileView()
+                .tabItem {
+                    Label("Profile", systemImage: "gear")
                 }
+                .tag(1)
         }
+//        .accentColor(.main)
+        .environmentObject(authVm)
+        
     }
 }
 

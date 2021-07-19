@@ -24,6 +24,19 @@ class AuthenticationService: ObservableObject {
     init() {
         validateAuth()
     }
+    
+    public func manageFbCredential(credential: AuthCredential) {
+        FirebaseAuth.Auth.auth().signIn(with: credential) { (authResult, error) in
+            guard authResult != nil , error == nil else {
+                if let error = error {
+                 print("Facebook credential failed, MFA may be needed - \(error)")
+                }
+                return
+            }
+            print("Successfully logged user in Firebase")
+            self.isLoggedIn = true
+        }
+    }
     public func authenticateUser() {
         guard loginUser.isvalid else { return }
         FirebaseAuth
@@ -81,9 +94,15 @@ class AuthenticationService: ObservableObject {
         isLoggedIn = FirebaseAuth.Auth.auth().currentUser != nil
     }
     
-    public func signOut() {
+    public func confirmSignOut() {
+        signOut()
+    }
+    
+    private func signOut() {
         do {
             try FirebaseAuth.Auth.auth().signOut()
+            
+            isLoggedIn = false
         } catch {
             print(error.localizedDescription)
         }

@@ -10,17 +10,21 @@ import SwiftUI
 struct ConversationsView: View {
     
     var body: some View {
-        Color.red
-            .ignoresSafeArea()
-            .navigationTitle("Conversations")
-            .navigationBarHidden(true)
-            .onAppear() {
-            }
+        VStack {
+            Color.white
+                .ignoresSafeArea()
+            
+            
+        }
+        .navigationTitle("Conversations")
     }
 }
 
 struct ConversationsView_Previews: PreviewProvider {
     static var previews: some View {
-        ConversationsView()
+        NavigationView {
+            ConversationsView()
+                .environmentObject(AuthenticationService())
+        }
     }
 }
