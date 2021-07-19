@@ -45,7 +45,7 @@ extension FCDatabaseManger {
     /// Insert a user to the database
     /// - Parameter user: the user to insert
     public func insertUser(with user: FCUser) {
-        print("Stored")
+        print("User Stored to db")
         database.child(user.safeEmail).setValue([
             "firstName" : user.firstName,
             "lastName" : user.lastName

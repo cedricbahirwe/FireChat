@@ -33,7 +33,7 @@ struct LoginView: View {
                         .font(.title3)
                         .bold()
                         .foregroundColor(.main)
-
+                    
                 }
                 TextField("Email...",
                           text: $authVm.loginUser.email)
@@ -56,7 +56,7 @@ struct LoginView: View {
                             .stroke(Color.primary)
                     )
                 
-               
+                
                 
                 Button(action: login) {
                     Text("Log In")
@@ -135,6 +135,7 @@ struct LOGO: View {
 fileprivate struct FBLoginButtonView: UIViewRepresentable {
     
     var didGetCredFromFb: (AuthCredential) -> Void
+    //    didSignoutFromFb: () -> Void
     func makeUIView(context: Context) ->  UIButton {
         let loginButton = FBLoginButton()
         loginButton.permissions = ["email", "public_profile"]
@@ -156,16 +157,49 @@ fileprivate struct FBLoginButtonView: UIViewRepresentable {
             self.parent = parent
         }
         func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
-                
+            
             guard let token = result?.token?.tokenString else {
                 print("User failed to log in with facebook")
                 return
             }
             
-            let credential = FacebookAuthProvider.credential(withAccessToken: token)
+            let facebookRequest = FBSDKLoginKit.GraphRequest(graphPath: "me",
+                                                             parameters: ["fields" : "email, name"],
+                                                             tokenString: token,
+                                                             version: nil,
+                                                             httpMethod: .get)
             
-            
-            parent.didGetCredFromFb(credential)
+            facebookRequest.start { (_, result, error) in
+                guard let result = result as? [String : Any],
+                      error == nil else {
+                    print("Failed to make Facebook graph request")
+                    return
+                }
+                
+                print(result)
+                
+                guard let userName = result["name"] as? String,
+                      let email = result["email"] as? String else {
+                    print("Failed to make email and name from Tacebook request")
+                    return
+                }
+                
+                let nameComponents = userName.components(separatedBy: " ")
+                guard nameComponents.count == 2 else { return }
+                
+                let firstName = nameComponents[0]
+                let lastName = nameComponents[1]
+                
+                FCDatabaseManger.shared.userExists(with: email) { exists in
+                    if !exists {
+                        let fcUser = FCUser(firstName: firstName, lastName: lastName, email: email)
+                        FCDatabaseManger.shared.insertUser(with: fcUser)
+                    }
+                }
+                let credential = FacebookAuthProvider.credential(withAccessToken: token)
+                
+                self.parent.didGetCredFromFb(credential)
+            }
             
         }
         

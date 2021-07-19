@@ -33,7 +33,7 @@ class AuthenticationService: ObservableObject {
                 }
                 return
             }
-            print("Successfully logged user in Firebaset")
+            print("Successfully logged user in Firebase")
             self.isLoggedIn = true
         }
     }
