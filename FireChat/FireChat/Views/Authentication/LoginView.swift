@@ -5,15 +5,15 @@
 //  Created by Cédric Bahirwe on 15/07/2021.
 //
 
+import UIKit
 import SwiftUI
 import FirebaseAuth
 import FBSDKLoginKit
-import UIKit
 
 let size = UIScreen.main.bounds.size
 
 struct LoginView: View {
-    @ObservedObject var authVm: AuthenticationService
+    @ObservedObject var authVm: FCAuthenticationService
     @State private var showLoginError = false
     @State private var goToRegistration = false
     
@@ -35,7 +35,7 @@ struct LoginView: View {
                         .foregroundColor(.main)
                     
                 }
-                TextField("Email...",
+                TextField("Email address",
                           text: $authVm.loginUser.email)
                     .textContentType(.emailAddress)
                     .autocapitalization(.none)
@@ -45,7 +45,7 @@ struct LoginView: View {
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.primary)
                     )
-                SecureField("Password...",
+                SecureField("Password",
                             text: $authVm.loginUser.password)
                     .textContentType(.password)
                     .disableAutocorrection(true)
@@ -112,7 +112,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(authVm: AuthenticationService())
+        LoginView(authVm: FCAuthenticationService())
     }
 }
 

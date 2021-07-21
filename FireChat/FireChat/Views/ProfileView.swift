@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var authVm: AuthenticationService
+    @EnvironmentObject var authVm: FCAuthenticationService
     @State private var showLogoutAlert = false
     var body: some View {
         NavigationView {

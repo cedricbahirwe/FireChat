@@ -14,7 +14,6 @@ final class FCDatabaseManger {
     private let database = Database.database().reference()
     
     private init () { }
-    
 
 }
 

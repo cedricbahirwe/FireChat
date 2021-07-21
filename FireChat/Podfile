@@ -12,9 +12,8 @@ target 'FireChat' do
   pod 'Firebase/Database'
 
   # Facebook
-  pod 'FBSDKLoginKit' 
+  pod 'FBSDKLoginKit'
  
-
   target 'FireChatTests' do
     inherit! :search_paths
     # Pods for testing

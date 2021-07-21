@@ -1,23 +1,24 @@
 //
-//  AuthenticationViewModel.swift
+//  FCAuthenticationService.swift
 //  FireChat
 //
-//  Created by Cédric Bahirwe on 17/07/2021.
+//  Created by Cédric Bahirwe on 21/07/2021.
 //
 
 import Foundation
 import Firebase
 import FirebaseAuth
+import FBSDKLoginKit
 
 struct FCError: Identifiable {
     var id: String { message }
     var message: String = ""
 }
 
-class AuthenticationService: ObservableObject {
+class FCAuthenticationService: ObservableObject {
     @Published var loginUser = LoginModel()
     @Published var regUser = RegisterModel()
-        
+    
     @Published var isLoggedIn = false
     @Published var regError: FCError?
     
@@ -25,11 +26,12 @@ class AuthenticationService: ObservableObject {
         validateAuth()
     }
     
+    
     public func manageFbCredential(credential: AuthCredential) {
         FirebaseAuth.Auth.auth().signIn(with: credential) { (authResult, error) in
             guard authResult != nil , error == nil else {
                 if let error = error {
-                 print("Facebook credential failed, MFA may be needed - \(error)")
+                    print("Facebook credential failed, MFA may be needed - \(error)")
                 }
                 return
             }
@@ -99,6 +101,14 @@ class AuthenticationService: ObservableObject {
     }
     
     private func signOut() {
+        
+        // Log out Facebook
+        FBSDKLoginKit.LoginManager().logOut()
+        
+        // Google Log out
+//        GIDSignIn.sharedInstance.signOut()
+        
+        // Log out Firebase
         do {
             try FirebaseAuth.Auth.auth().signOut()
             

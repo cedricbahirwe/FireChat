@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct RegisterView: View {
-    @ObservedObject var authVm: AuthenticationService
+    @ObservedObject var authVm: FCAuthenticationService
     @State private var showRegError = false
     @State private var showImagePicker = false
     @State private var showPhotoActionSheet = false
@@ -149,7 +149,7 @@ struct RegisterView: View {
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RegisterView(authVm: AuthenticationService())
+            RegisterView(authVm: FCAuthenticationService())
                 .navigationBarTitleDisplayMode(.inline)
         }
     }

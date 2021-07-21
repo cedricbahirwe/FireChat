@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var authVm = AuthenticationService()
+    @StateObject var authVm = FCAuthenticationService()
     @State private var selection = 0
     var body: some View {
         

@@ -24,7 +24,7 @@ struct ConversationsView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             ConversationsView()
-                .environmentObject(AuthenticationService())
+                .environmentObject(FCAuthenticationService())
         }
     }
 }
